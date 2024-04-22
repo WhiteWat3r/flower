@@ -38,7 +38,9 @@ useEffect(() => {
           <Button type="secondary" onClick={() => setisModalOpen(true)}>
             Проверить подписку
           </Button>
+          <span className='text-[#A9A9A9] text-[12px]'>@kalkulyator_bot</span>
         </div>
+      
       </div>
 
       {isModalOpen && <Modal handleClose={() => setisModalOpen(false)} />}
