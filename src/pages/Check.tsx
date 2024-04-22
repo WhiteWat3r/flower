@@ -6,26 +6,24 @@ import Modal from '../components/Modal';
 const Check = () => {
   const navigate = useNavigate();
 
-  const [isModalOpen, setisModalOpen] = useState(false)
+  const [isModalOpen, setisModalOpen] = useState(false);
 
-
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const simulateBackendRequest = () => {
     setIsLoading(true);
     setTimeout(() => {
-      const isSuccess = false; 
+      const isSuccess = false;
       if (isSuccess) {
-        navigate('/on-boarding'); 
+        navigate('/on-boarding');
       }
-      setIsLoading(false)
-    }, 1500); 
+      setIsLoading(false);
+    }, 1500);
   };
 
-
-useEffect(() => {
-  simulateBackendRequest();
-}, []);
+  useEffect(() => {
+    simulateBackendRequest();
+  }, []);
 
   return !isLoading ? (
     <div className="bg-check h-full bg-center bg-cover flex flex-col justify-end items-center">
@@ -38,14 +36,15 @@ useEffect(() => {
           <Button type="secondary" onClick={() => setisModalOpen(true)}>
             Проверить подписку
           </Button>
-          <span className='text-[#A9A9A9] text-[12px]'>@kalkulyator_bot</span>
+          <span className="text-[#A9A9A9] text-[12px]">@kalkulyator_bot</span>
         </div>
-      
       </div>
 
       {isModalOpen && <Modal handleClose={() => setisModalOpen(false)} />}
     </div>
-  ) : <>ЗАГРУЗКА</>;
+  ) : (
+    <>ЗАГРУЗКА</>
+  );
 };
 
 export default Check;

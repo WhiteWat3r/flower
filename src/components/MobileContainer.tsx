@@ -9,11 +9,11 @@ export const MobileContainer = ({children}: {children: ReactNode}) => {
   return (
     <div
       id={'container'}
-      style={{
-        transform:
-          currentBreakpointName === 'desktop' ? `scale(${1 - 625 / windowHeight + 1})` : '',
-      }}
-      className={`relative w-full desktop:h-[667px] desktop:w-[375px] rounded-none overflow-hidden desktop:rounded-2xl desktop:shadow-2xl object-cover bg-cover bg-center h-full`}>
+      // style={{
+      //   transform:
+      //     currentBreakpointName === 'desktop' ? `scale(${1 - 625 / windowHeight + 1})` : '',
+      // }}
+      className={`relative w-full  rounded-none overflow-hidden desktop:rounded-2xl desktop:shadow-2xl object-cover bg-cover bg-center h-full`}>
         {children}
     </div>
   );
