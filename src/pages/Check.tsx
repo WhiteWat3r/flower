@@ -31,11 +31,11 @@ useEffect(() => {
     <div className="bg-check h-full bg-center bg-cover flex flex-col justify-end items-center">
       <div className="w-full  bg-white rounded-t-[15px]  h-[180px] flex justify-center">
         <div className="w-[95%] flex flex-col gap-[15px] mb-[33px] mt-[23px] items-center">
-          <Button type="primary" onClick={() => setisModalOpen(true)}>
+          <Button type="primary" onClick={() => navigate('/on-boarding')}>
             Подписаться
           </Button>
 
-          <Button type="secondary" onClick={() => navigate('/on-boarding')}>
+          <Button type="secondary" onClick={() => setisModalOpen(true)}>
             Проверить подписку
           </Button>
         </div>
