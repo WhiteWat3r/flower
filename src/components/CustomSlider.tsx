@@ -49,12 +49,10 @@ const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    // Проверяем, загрузились ли изображения man и people
     const manImage = new Image();
     manImage.onload = () => {
       const peopleImage = new Image();
       peopleImage.onload = () => {
-        // Устанавливаем состояние, что изображения загружены
         setImagesLoaded(true);
       };
       peopleImage.src = people;
