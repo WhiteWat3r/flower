@@ -22,28 +22,36 @@ const Calc = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    const imagePaths = [man, people, hunger1, hunger2, hunger3, time1, time2, time3];
+    // Создаем массив промисов для загрузки всех изображений
+    const imagePromises = [
+      loadImage(man),
+      loadImage(people),
+      loadImage(hunger1),
+      loadImage(hunger2),
+      loadImage(hunger3),
+      loadImage(time1),
+      loadImage(time2),
+      loadImage(time3),
+    ];
 
-    const checkAllImagesLoaded = () => {
-      for (const imagePath of imagePaths) {
-        const image = new Image();
-        image.src = imagePath;
-        if (!image.complete) {
-          return false;
-        }
-      }
-      return true;
-    };
-
-    const checkImagesInterval = setInterval(() => {
-      if (checkAllImagesLoaded()) {
-        clearInterval(checkImagesInterval);
+    // Ждем загрузки всех изображений
+    Promise.all(imagePromises)
+      .then(() => {
         setImagesLoaded(true);
-      }
-    }, 100);
-
-    return () => clearInterval(checkImagesInterval);
+      })
+      .catch(error => {
+        console.error('Ошибка загрузки изображений:', error);
+      });
   }, []);
+
+  const loadImage = (src: string) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve('');
+      image.onerror = (error) => reject(error);
+      image.src = src;
+    });
+  };
 
   const [peopleCount, setPeopleCount] = useState(1);
   const [hungredStatus, setHungredCount] = useState(1);
