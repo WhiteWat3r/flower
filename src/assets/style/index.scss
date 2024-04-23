@@ -17,25 +17,25 @@ background-color: black;
 
 
 
-*::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  height: 40px;
-  margin-top: 10px;
-  background: none;
-  color: transparent;
-}
+// *::-webkit-slider-runnable-track {
+//   -webkit-appearance: none;
+//   height: 40px;
+//   margin-top: 10px;
+//   background: none;
+//   color: transparent;
+// }
 
-*::-webkit-slider-thumb {
-  width: 10px;
-  -webkit-appearance: none;
-  height: 20px;
-  // box-shadow: -80px 0 0 80px #43e5f7;
-  background: none;
-  color: transparent;
+// *::-webkit-slider-thumb {
+//   width: 10px;
+//   -webkit-appearance: none;
+//   height: 20px;
+//   // box-shadow: -80px 0 0 80px #43e5f7;
+//   background: none;
+//   color: transparent;
   
-  visibility:hidden;
+//   visibility:hidden;
 
-}
+// }
 
 *::-moz-range-progress {
   background: none;

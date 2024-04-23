@@ -51,8 +51,8 @@ const Calc = () => {
         setCount={setDuration}
         count={duration}
       />
-      
-      <div className="w-full flex pb-[20px] flex flex-col gap-[23px]">
+      git
+      <div className="w-full pb-[20px] flex flex-col gap-[23px]">
 
       <div className="w-full flex flex-col mt-[20px]">
         <span className="text-[14px] font-medium mb-[15px]">
