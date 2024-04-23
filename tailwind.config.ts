@@ -52,6 +52,7 @@ const config: Config = {
         handMove: 'handMove 4s infinite',
         screenMove: 'screenMove 4s infinite',
         'fly-heart': 'fly-heart 3s infinite',
+        leftAnim: 'left 0.2s ease'
       },
     },
   },

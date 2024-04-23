@@ -26,6 +26,8 @@ const Calc = () => {
       <h1 className="font-medium text-[20px] self-start mb-[10px] max-[370px]:text-[18px] mt-[20px] z-10">
         Гриль-вечеринка в 5 кликов
       </h1>
+
+
       <CustomSlider
         label={'Укажите количество гостей'}
         max={20}
