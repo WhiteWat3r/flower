@@ -1,15 +1,16 @@
 import { ReactNode } from 'react';
 
-import man from '../assets/images/man.png';
-import people from '../assets/images/people.png';
+import man from '/images/man.png';
+import people from '/images/people.png';
 
-import hunger1 from '../assets/images/hunger1.png';
-import hunger2 from '../assets/images/hunger2.png';
-import hunger3 from '../assets/images/hunger3.png';
+import hunger1 from '/images/hunger1.png';
+import hunger2 from '/images/hunger2.png';
+import hunger3 from '/images/hunger3.png';
 
-import time1 from '../assets/images/time1.png';
-import time2 from '../assets/images/time2.png';
-import time3 from '../assets/images/time3.png';
+import time1 from '/images/time1.png';
+import time2 from '/images/time2.png';
+import time3 from '/images/time3.png';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface ICustomSlider {
   count: number;
@@ -46,6 +47,9 @@ const imgs = {
 const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
   //   const [peopleCount, setPeopleCount] = useState(1);
 
+  const [width] = useWindowSize();
+  console.log(width);
+
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCount(parseInt(event.target.value));
   };
@@ -54,7 +58,7 @@ const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
     <div className="w-full h-20 flex flex-col">
       <span className="mb-[35px]">{label}</span>
 
-      <div className="w-full relative  h-7 ">
+      <div className="w-full relative  min-h-7 ">
         <input
           type="range"
           min="1"
@@ -66,11 +70,29 @@ const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
         <span className="absolute left-0 w-full top-0 bg-input-color z-20 h-[5px] pointer-events-none rounded-[30px]" />
         <div
           className={`absolute z-20 pointer-events-none translate-x-[-50%] transition-all
-           ${type == 'guest' ? 'top-[-110%]' : 'top-[-200%]'}
+           ${type == 'guest' ? 'top-[-110%]' : 'top-[-150%]'}
            ${count < max / 2 ? imgs[type].firstImgStyle : imgs[type].secondImgStyle}`}
-          style={{ left: `${((count - 1) / (max - 1)) * (type === 'guest' ? 90 : 83) + (type === 'guest' ? 2 : 8)}%`, transition: 'left 0.2s ease' }}>
+          style={
+            width > 470
+              ? {
+                  left: `${
+                    ((count - 1) / (max - 1)) * (type === 'guest' ? 95 : 92) +
+                    (type === 'guest' ? 2 : 4)
+                  }%`,
+                  transition: 'left 0.2s ease',
+                }
+              : {
+                  left: `${
+                    ((count - 1) / (max - 1)) * (type === 'guest' ? 90 : 83) +
+                    (type === 'guest' ? 2 : 8)
+                  }%`,
+                  transition: 'left 0.2s ease',
+                }
+          }>
           {type == 'guest' && (
-            <span className="absolute top-[-15px] left-[50%] translate-x-[-50%] text-[12px]">{count}</span>
+            <span className="absolute top-[-10px] left-[50%] translate-x-[-50%] text-[12px]">
+              {count}
+            </span>
           )}
 
           <img

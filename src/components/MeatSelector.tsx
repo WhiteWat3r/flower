@@ -47,7 +47,7 @@ useEffect (() => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <span className="mb-[10px]">Выберите мясо</span>
+      <span className="mb-[10px] self-start">Выберите мясо</span>
       <div className="flex justify-between w-full">
         {options.map((option) => (
           <label key={option.value} className="flex flex-col items-center">
@@ -61,7 +61,7 @@ useEffect (() => {
             <img
               src={option.image}
               alt={option.value}
-              className={`w-[62px] h-[62px] rounded-full cursor-pointer border-2 border-input-color ${
+              className={`w-[62px] h-[62px] max-[370px]:w-[40px] max-[370px]:h-[40px] rounded-full cursor-pointer border-2 border-input-color ${
                 selectedOption === option.value ? 'border-2 !border-black bg-input-color' : ''
               }`}
             />

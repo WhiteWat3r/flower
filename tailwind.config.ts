@@ -19,11 +19,13 @@ const config: Config = {
         'secondary-button' : '#E3F1FA',
         'text-button' : '#158ACC',
         'bg-color' : '#F5EEE5',
-        'input-color' : '#ECD9C1'
+        'input-color' : '#ECD9C1',
+        'header-text': '#EBB948'
       },
       backgroundImage: {
         onBoarding: 'url("/src/assets/images/onBoarding.png")',
         check: 'url("/src/assets/images/check.png")',
+        calc: 'url("/src/assets/images/calc-bg.png")',
 
       },
 
