@@ -1,4 +1,6 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode,
+  //  useEffect, useState 
+  } from 'react';
 
 import man from '/images/man.png';
 import people from '/images/people.png';
@@ -46,19 +48,19 @@ const imgs = {
 };
 
 const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  // const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  useEffect(() => {
-    const manImage = new Image();
-    manImage.onload = () => {
-      const peopleImage = new Image();
-      peopleImage.onload = () => {
-        setImagesLoaded(true);
-      };
-      peopleImage.src = people;
-    };
-    manImage.src = man;
-  }, []);
+  // useEffect(() => {
+  //   const manImage = new Image();
+  //   manImage.onload = () => {
+  //     const peopleImage = new Image();
+  //     peopleImage.onload = () => {
+  //       setImagesLoaded(true);
+  //     };
+  //     peopleImage.src = people;
+  //   };
+  //   manImage.src = man;
+  // }, []);
 
   //   const [peopleCount, setPeopleCount] = useState(1);
   // const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -71,7 +73,7 @@ const CustomSlider = ({ count, setCount, label, max, type }: ICustomSlider) => {
   // };
 
   return (
-    imagesLoaded && (
+     (
       // <div className="w-full h-20 flex flex-col">
       //   <span className="mb-[35px]">{label}</span>
 
