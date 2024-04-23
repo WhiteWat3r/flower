@@ -22,7 +22,6 @@ const Calc = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    // Создаем массив промисов для загрузки всех изображений
     const imagePromises = [
       loadImage(man),
       loadImage(people),
@@ -34,7 +33,6 @@ const Calc = () => {
       loadImage(time3),
     ];
 
-    // Ждем загрузки всех изображений
     Promise.all(imagePromises)
       .then(() => {
         setImagesLoaded(true);
