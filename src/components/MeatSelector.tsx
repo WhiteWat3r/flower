@@ -46,8 +46,8 @@ useEffect (() => {
 }, [])
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <span className="mb-[10px] self-start">Выберите мясо</span>
+    <div className="flex flex-col items-center w-full mt-[10px] mb-[12px]">
+      <span className="mb-[10px] self-start text-[14px]">Выберите мясо</span>
       <div className="flex justify-between w-full">
         {options.map((option) => (
           <label key={option.value} className="flex flex-col items-center">

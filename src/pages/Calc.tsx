@@ -60,14 +60,14 @@ const Calc = () => {
 
   return (
     imagesLoaded && (
-      <div className="h-full flex flex-col justify-between items-center px-[19px] gap-4 relative">
+      <div className="h-full flex flex-col justify-between items-center px-[19px] relative">
         <img
           src={calc}
           alt="Stars"
           className="absolute  w-[120px] h-[100px] right-0 max-[370px]:w-[80px] max-[370px]:h-[80px]"
         />
 
-        <h1 className="font-medium text-[20px] self-start mb-[10px] max-[370px]:text-[18px] mt-[20px] z-10">
+        <h1 className="font-medium text-[20px] self-start mb-[18px] max-[370px]:text-[18px] mt-[23px] z-10">
           Гриль-вечеринка в 5 кликов
         </h1>
 
@@ -96,18 +96,18 @@ const Calc = () => {
           setCount={setDuration}
           count={duration}
         />
-        <div className="w-full pb-[20px] flex flex-col gap-[23px]">
-          <div className="w-full flex flex-col mt-[20px]">
+        <div className="w-full pb-[22px] flex flex-col gap-[23px]">
+          <div className="w-full flex flex-col mt-[25px]">
             <span className="text-[14px] font-medium mb-[15px]">
               Чтобы никто не ушел голодным, вам понадобится:
             </span>
             <ul className="flex w-full gap-[6px] justify-between">
               <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
                 {meatKilogramsCounting(hungredStatus, duration, meat as string, peopleCount)}
-                кг мяса
+                 кг мяса
               </li>
               <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
-                {' '}
+            
                 рублей
               </li>
             </ul>
