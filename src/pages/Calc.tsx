@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from '../ui/Button';
 import CustomSlider from '../components/CustomSlider';
 import MeatSelector from '../components/MeatSelector';
-import { meatKilogramsCounting } from '../utils/meatKilogramsCounting';
+import { meatKilogramsCounting, priceCounting } from '../utils/meatKilogramsCounting';
 
 import calc from '../assets/images/calc.png';
 
@@ -36,7 +36,7 @@ const Calc = () => {
       .then(() => {
         setImagesLoaded(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Ошибка загрузки изображений:', error);
       });
   }, []);
@@ -55,70 +55,69 @@ const Calc = () => {
   const [duration, setDuration] = useState(1);
   const [meat, setMeat] = useState<string>();
 
+  const meatWeight = meatKilogramsCounting(hungredStatus, duration, meat as string, peopleCount);
+
   return (
     imagesLoaded && (
       <div className="w-full flex flex-col items-center relative pb-[32px] overflow-auto">
-          <div className={"m-auto flex flex-col items-center relative px-[19px] w-full"}>
-              <img
-                  src={calc}
-                  alt="Stars"
-                  className="absolute  w-[120px] h-[100px] right-0 max-[370px]:w-[80px] max-[370px]:h-[80px]"
-              />
+        <div className={'m-auto flex flex-col items-center relative px-[19px] w-full'}>
+          <img
+            src={calc}
+            alt="Stars"
+            className="absolute  w-[120px] h-[100px] right-0 max-[370px]:w-[80px] max-[370px]:h-[80px]"
+          />
 
-              <h1 className="font-medium text-[20px] self-start mb-[22px] max-[370px]:text-[18px] mt-[23px] z-10">
-                  Гриль-вечеринка в 5 кликов
-              </h1>
+          <h1 className="font-medium text-[20px] self-start mb-[22px] max-[370px]:text-[18px] mt-[23px] z-10">
+            Гриль-вечеринка в 5 кликов
+          </h1>
 
-              <CustomSlider
-                  label={'Укажите количество гостей'}
-                  max={20}
-                  type={'guest'}
-                  setCount={setPeopleCount}
-                  count={peopleCount}
-              />
+          <CustomSlider
+            label={'Укажите количество гостей'}
+            max={20}
+            type={'guest'}
+            setCount={setPeopleCount}
+            count={peopleCount}
+          />
 
-              <MeatSelector selectedOption={meat as string} setSelectedOption={setMeat} />
+          <MeatSelector selectedOption={meat as string} setSelectedOption={setMeat} />
 
-              <CustomSlider
-                  label={'Оцените уровень голода'}
-                  max={3}
-                  type={'hunger'}
-                  setCount={setHungredCount}
-                  count={hungredStatus}
-              />
+          <CustomSlider
+            label={'Оцените уровень голода'}
+            max={3}
+            type={'hunger'}
+            setCount={setHungredCount}
+            count={hungredStatus}
+          />
 
-              <CustomSlider
-                  label={'Укажите продолжительность вечеринки'}
-                  max={3}
-                  type={'time'}
-                  setCount={setDuration}
-                  count={duration}
-              />
-              <div className="w-full pb-[22px] flex flex-col gap-[23px]">
-                  <div className="w-full flex flex-col mt-[25px]">
-            <span className="text-[14px] font-medium mb-[15px]">
-              Чтобы никто не ушел голодным, вам понадобится:
-            </span>
-                      <ul className="flex w-full gap-[6px] justify-between">
-                          <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
-                              {meatKilogramsCounting(hungredStatus, duration, meat as string, peopleCount)}
-                              кг мяса
-                          </li>
-                          <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
-
-                              рублей
-                          </li>
-                      </ul>
-                  </div>
-              </div>
+          <CustomSlider
+            label={'Укажите продолжительность вечеринки'}
+            max={3}
+            type={'time'}
+            setCount={setDuration}
+            count={duration}
+          />
+          <div className="w-full pb-[22px] flex flex-col gap-[23px]">
+            <div className="w-full flex flex-col mt-[25px]">
+              <span className="text-[14px] font-medium mb-[15px]">
+                Чтобы никто не ушел голодным, вам понадобится:
+              </span>
+              <ul className="flex w-full gap-[6px] justify-between">
+                <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
+                  {meatWeight} кг мяса
+                </li>
+                <li className="w-[48%] flex bg-white rounded-[10px] h-10 justify-center items-center border border-input-color">
+                ≈ {Math.round(priceCounting(meat as string, Number(meatWeight)) / 100) * 100} рублей
+                </li>
+              </ul>
+            </div>
           </div>
+        </div>
 
-
-          <a className={"block w-full px-[19px]"} href={"eda.yandex://collections/ye_bm_may2024_tsar"}>
-              <Button type="primary">
-                  Заказать в Яндекс Еде
-              </Button>
-          </a>
+        <a
+          className={'block w-full px-[19px]'}
+          href={'eda.yandex://collections/ye_bm_may2024_tsar'}>
+          <Button type="primary">Заказать в Яндекс Еде</Button>
+        </a>
       </div>
     )
   );

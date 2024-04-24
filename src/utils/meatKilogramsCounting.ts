@@ -1,6 +1,10 @@
-export const meatKilogramsCounting = (hungredStatus: number, duration: number, meat: string, peopleCount: number) => {
+export const meatKilogramsCounting = (
+  hungredStatus: number,
+  duration: number,
+  meat: string,
+  peopleCount: number,
+) => {
   let baseAmount: number;
-
 
   const isVegetable = meat === 'chicken' || meat === 'vegetable';
   if (isVegetable) {
@@ -35,7 +39,20 @@ export const meatKilogramsCounting = (hungredStatus: number, duration: number, m
       coefficient = isVegetable ? 2 : 2.34;
     }
   }
-
-  // Умножаем базовое количество на коэффициент
   return (baseAmount * coefficient).toFixed(1);
+};
+
+export const priceCounting = (meat: string, kg: number) => {
+  switch (meat) {
+    case 'chicken':
+      return kg * 415;
+    case 'vegetable':
+      return kg * 1350;
+    case 'cow':
+      return kg * 675;
+    case 'sheep':
+      return kg * 1350;
+    default:
+      return kg * 510;
+  }
 };
