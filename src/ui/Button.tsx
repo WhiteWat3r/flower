@@ -4,7 +4,7 @@ import React from 'react';
 interface IButtonProps {
   type: 'primary' | 'secondary' | 'modal';
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const buttonStyles = {

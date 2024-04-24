@@ -16,14 +16,16 @@ export const MobileContainer = ({children}: {children: ReactNode}) => {
       //     currentBreakpointName === 'desktop' ? `scale(${1 - 625 / windowHeight + 1})` : '',
       // }}
 
-      
+
       className={`relative w-full 
       
       bg-bg-color
-      overflow-y-scroll
+      overflow-y-auto
+      
+      flex
       
       
-      rounded-none overflow-hidden desktop:rounded-2xl desktop:shadow-2xl object-cover bg-cover bg-center h-full`}>
+      rounded-none desktop:rounded-2xl desktop:shadow-2xl object-cover bg-cover bg-center h-full`}>
         {children}
     </div>
   );
