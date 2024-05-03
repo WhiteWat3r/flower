@@ -2,43 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '../fonts/YS_text/Ys_text.css';
-
-// *::-webkit-slider-thumb {
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-//   background-color: black;
-// }
-
-// *::-webkit-slider-runnable-track {
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-
-
-//   height: 40px;
-//   margin-top: 10px;
-//   background: none;
-//   color: transparent;
-// }
-
-// *::-webkit-slider-thumb {
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-
-
-//   width: 10px;
-//   height: 20px;
-//   // box-shadow: -80px 0 0 80px #43e5f7;
-//   background: none;
-//   color: transparent;
-
-//   visibility: hidden;
-// }
-
-
+@import '../fonts/Better_VCR/Better_VCR.css';
 
 html,
 body,
@@ -54,7 +18,7 @@ body,
 }
 
 body {
-  font-family: 'YS Text';
+  font-family: 'Better VCR', sans-serif;
   margin: 0;
 
   background-position: center;
@@ -63,8 +27,8 @@ body {
   overflow: hidden;
 }
 
-
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
 }
