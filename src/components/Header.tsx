@@ -5,6 +5,7 @@ import healthImg from '../assets/images/health.png';
 import waterImg from '../assets/images/water.png';
 import happinessImg from '../assets/images/happiness.png';
 import { useAppSelector } from '../store/store';
+import { Link } from 'react-router-dom';
 
 const flowerRequirements = [
   {
@@ -31,15 +32,15 @@ const Header = () => {
 
   return (
     <header className="w-full absolute top-0 left-0 flex flex-col  px-[25px] h-[100px] gap-[15px] z-30">
-      <div className="flex items-center gap-[20px] mt-[20px]">
+      <div className="flex items-center gap-[20px] mt-[20px] justify-between">
         <div className="flex items-center gap-[5px]">
           <img src={logo} alt="Логотип" className="h-[45px]" />
           <span className="text-red-custom text-[22px]">flowwow</span>
         </div>
         <span className="uppercase text-custom-blue text-[17px]">День {currentDay}/3</span>
-        <button>
+        <Link to={'/settings'}>
           <img src={settingsImg} alt="Настройки" className="h-[26px]" />
-        </button>
+        </Link>
       </div>
       <ul className="flex gapp-[10px] justify-between">
         {flowerRequirements.map((req) => (

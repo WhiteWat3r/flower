@@ -8,19 +8,19 @@ import SaveMail from '../components/SaveMail';
 // import { useWindowSize } from '../hooks/useWindowSize';
 // bg-onBoarding
 
-const promoText = [
-  [
-    '— Спасибо, что даешь мне жизнь! Вижу, ты уже знаком с моими друзьями из Flowwow. Держи бонусы на новую покупку!',
-    '%сервисное сообщение%',
-  ],
-  [
-    '— Спасибо, что даешь мне жизнь! Держи промокод в подарок от моих друзей из Flowwow',
-    '%промокод% ',
-  ],
-  [
-    '— Спасибо, что даешь мне жизнь! Вижу, что ты еще не авторизовался в Flowwow. Если хочешь продолжить игру, авторизуйся в сервисе.',
-  ],
-];
+// const promoText = [
+//   [
+//     '— Спасибо, что даешь мне жизнь! Вижу, ты уже знаком с моими друзьями из Flowwow. Держи бонусы на новую покупку!',
+//     '%сервисное сообщение%',
+//   ],
+//   [
+//     '— Спасибо, что даешь мне жизнь! Держи промокод в подарок от моих друзей из Flowwow',
+//     '%промокод% ',
+//   ],
+//   [
+//     '— Спасибо, что даешь мне жизнь! Вижу, что ты еще не авторизовался в Flowwow. Если хочешь продолжить игру, авторизуйся в сервисе.',
+//   ],
+// ];
 
 const seedText = [
   [
@@ -44,10 +44,10 @@ const messages = [
 
 const OnBoarding = () => {
   const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const navigate = useNavigate();
   console.log(selectedSeedId);
-  const userStatus = 2; // не было покупок/были/неавторизован
+  // const userStatus = 2; // не было покупок/были/неавторизован
 
   const handleContinue = () => {
     step < 3 ? setStep(step + 1) : navigate('/tasks');
@@ -59,8 +59,8 @@ const OnBoarding = () => {
 
   const renderMessage = () => {
     switch (step) {
-      case 0:
-        return promoText[userStatus];
+      // case 0:
+      //   return promoText[userStatus];
       case 1:
         return seedText[selectedSeedId];
       case 2:
@@ -75,6 +75,12 @@ const OnBoarding = () => {
   return (
     <div className="h-full flex flex-col justify-end items-center bg-custom-pink px-[25px] pb-[20px]">
       <div className="h-[82%] bg-custom-yellow w-full border-2 border-red-custom shadow-default pb-[15px] flex flex-col justify-between items-center ">
+        {step === 1 && (
+          <h1 className="text-red-custom text-[34px] text-center mt-[19px] leading-[132%]">
+            Корни пущены!
+          </h1>
+        )}
+
         <span />
 
         <div className="flex flex-col gap-[10px] items-center self-center w-full">
@@ -85,7 +91,7 @@ const OnBoarding = () => {
               {msg}
             </div>
           ))}
-          {step == 3 && <SaveMail />}
+          {step == 2 && <SaveMail />}
         </div>
 
         <ul className="mx-[10px] flex flex-col gap-[12px] justify-end first-letter:h-[20%] w-[95%]">

@@ -4,6 +4,8 @@ import { MobileContainer } from './components/MobileContainer';
 import Start from './pages/Start';
 import Tasks from './pages/Tasks';
 import EndDay from './pages/EndDay';
+import Settings from './pages/Settings';
+import Prizes from './pages/Prizes';
 
 export default function App() {
   return (
@@ -14,6 +16,9 @@ export default function App() {
         {/* <Route path="/calc" element={<Calc />} /> */}
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/end-day" element={<EndDay />} />
+
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/prizes" element={<Prizes />} />
 
         
       </Routes>

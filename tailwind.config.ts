@@ -25,7 +25,6 @@ const config: Config = {
       backgroundImage: {
         message: 'url("/src/assets/images/message.png")',
       },
-
       keyframes: {
         //Move: {
         //   '0%': { transform: 'translateX(0px)' },
