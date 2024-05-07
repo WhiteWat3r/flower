@@ -200,12 +200,12 @@ const Tasks = () => {
   return (
     <div className="h-full flex flex-col justify-center items-center bg-white-bg px-[25px] pb-[20px] relative">
       <div className="w-full pointer-events-none pt-[100px] relative">
-        {reaction &&  (
-          <span className={`absolute ${currentDay ===1 ? 'bottom-[300px]' : 'bottom-[360px]'}  left-[65px] z-10 border-2 border-custom-blue p-[10px] w-[220px] bg-custom-white shadow-default text-red-custom`}>
+        {reaction && (
+          <span className={`absolute ${currentDay ===1 ? 'bottom-[50%]' : 'bottom-[60%]'}  left-[20%] z-10 border-2 border-custom-blue p-[10px] w-[220px] bg-custom-white shadow-default text-red-custom`}>
             {reaction}
             <img
               src={reactionImg}
-              className="absolute w-[22px] h-[15px] bottom-[-15px] left-[50%] translate-x-[-50%] "
+              className="absolute w-[22px] h-[15px] bottom-[-14px] left-[50%] translate-x-[-50%] "
             />
           </span>
         )}
