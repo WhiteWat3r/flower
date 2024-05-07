@@ -15,7 +15,7 @@ const Prizes = () => {
           Настройки
         </h1>
 
-        <ul className="flex flex-col gap-[10px] items-center self-center w-full">
+        <ul className="flex flex-col gap-[20px] items-center self-center w-full">
           <li
             className="bg-message w-[95%] bg-[length:100%_100%] pb-[50px] px-[14px] pt-[13px] leading-[120%] text-red-custom"
             key={1}>

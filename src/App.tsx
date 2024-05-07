@@ -6,6 +6,7 @@ import Tasks from './pages/Tasks';
 import EndDay from './pages/EndDay';
 import Settings from './pages/Settings';
 import Prizes from './pages/Prizes';
+import Result from "./pages/Result.tsx";
 
 export default function App() {
   return (
@@ -19,8 +20,9 @@ export default function App() {
 
         <Route path="/settings" element={<Settings />} />
         <Route path="/prizes" element={<Prizes />} />
+        <Route path="/result" element={<Result />} />
 
-        
+
       </Routes>
     </MobileContainer>
   );

@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
+import { useSound } from '../hooks/useSound';
+import clickSound from '../assets/music/zvuki_tamagochi_5Ie.mp3';
 
 
 interface IButtonProps {
@@ -17,13 +19,21 @@ const buttonStyles = {
 };
 
 const Button = ({ children, type, onClick, img, disabled}: IButtonProps) => {
+
+  const [playClickSound] = useSound(clickSound);
+
+  const handleClick = () => {
+    playClickSound();
+    onClick && onClick();
+  };
+
   return (
     <button
       className={classNames('w-full h-full flex items-center shadow-default text-red-custom', buttonStyles[type])}
-      onClick={onClick} disabled={disabled}>
+      onClick={handleClick} disabled={disabled}>
       {children}
 
-      {img && <img src={img} className="w-[90px]" />}
+      {img && <img src={img} alt={''} className="w-[90px]" />}
     </button>
   );
 };

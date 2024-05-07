@@ -1,8 +1,18 @@
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../store/store.ts";
+import {setIsSoundOn} from "../store/mainSlice.ts";
 
 const Settings = () => {
   const navigate = useNavigate();
+
+  const isSoundOn = useAppSelector((store) => store.main.isSoundOn);
+
+  const dispatch = useAppDispatch();
+
+  const toggleSound = () => {
+    dispatch(setIsSoundOn());
+  }; // включение/выключение звука
 
   const handleGoBack = () => {
     navigate(-1);
@@ -21,9 +31,11 @@ const Settings = () => {
             </Button>
           </li>
           <li className='h-full'>
-            <Button type={'gameAction'} onClick={handleGoBack}>
-              {'> Звук: включить'}
+            <Button type={'gameAction'} onClick={toggleSound}>
+               {isSoundOn ? '> Звук: выключить' : '> Звук: включить'}
             </Button>
+
+
           </li>
           <li className='h-full'>
           <Button type={'gameAction'} onClick={() => navigate('/prizes')}>

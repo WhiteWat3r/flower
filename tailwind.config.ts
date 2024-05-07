@@ -21,6 +21,7 @@ const config: Config = {
         'button-bg': '#FF8956',
         'white-bg': '#FDF0D5',
         'pressed-color': '#e7d9f6',
+        'blue-bg': '#ece1f7'
       },
       backgroundImage: {
         message: 'url("/src/assets/images/message.png")',

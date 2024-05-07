@@ -1,13 +1,18 @@
 import Button from '../ui/Button';
 import Lottie from 'lottie-react';
-
 import yellowSeed from '../assets/images/yellowSeed.png';
 import whiteSeed from '../assets/images/whiteSeed.png';
 import redSeed from '../assets/images/redSeed.png';
 
-import yellowSeedAnimation from '../assets/animations/1st_day/1st_day_yellow_seed.json';
-import whiteSeedAnimation from '../assets/animations/1st_day/1st_day_white_seed.json';
-import redSeedAnimation from '../assets/animations/1st_day/1st_day_red_seed.json';
+import yellowSeedAnimation from '../assets/animations/1/yellowSeedAnimation.json';
+import whiteSeedAnimation from '../assets/animations/1/whiteSeedAnimation.json';
+import redSeedAnimation from '../assets/animations/1/redSeedAnimation.json';
+
+// import yellowSeedAnimation from '../assets/animations/1/1st_day_yellow_seed.json' as any;
+// import whiteSeedAnimation from '../assets/animations/1/1st_day_white_seed.json' as any;
+// import redSeedAnimation from '../assets/animations/1/1st_day_red_seed.json' as any;
+
+
 
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../store/store';
