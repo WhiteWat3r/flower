@@ -7,6 +7,7 @@ interface IGameState {
   isSecondActionPressed: boolean;
   isThirdActionPressed: boolean;
   isSoundOn: boolean;
+  isFirstClick: boolean;
 }
 
 const mainState: IGameState = {
@@ -16,6 +17,7 @@ const mainState: IGameState = {
   isSecondActionPressed: false,
   isThirdActionPressed: false,
   isSoundOn: false,
+  isFirstClick: true
 };
 
 export const mainSlice = createSlice({
@@ -45,6 +47,9 @@ export const mainSlice = createSlice({
     setIsSoundOn: (state) => {
       state.isSoundOn = !state.isSoundOn;
     },
+    setIsFirstClick: (state, action) => {
+      state.isFirstClick = action.payload;
+    }
   },
 });
 
@@ -55,5 +60,6 @@ export const {
   setSecondActionPressed,
   setFirstActionPressed,
   clearActionsStatus,
-  setIsSoundOn
+  setIsSoundOn,
+  setIsFirstClick
 } = mainSlice.actions;

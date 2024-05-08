@@ -1,7 +1,7 @@
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../store/store.ts";
-import {setIsSoundOn} from "../store/mainSlice.ts";
+import {setIsFirstClick, setIsSoundOn} from "../store/mainSlice.ts";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ const Settings = () => {
   const dispatch = useAppDispatch();
 
   const toggleSound = () => {
+    dispatch(setIsFirstClick(false))
     dispatch(setIsSoundOn());
   }; // включение/выключение звука
 

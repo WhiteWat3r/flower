@@ -9,7 +9,7 @@ import Input from '../ui/Input';
 import reactionImg from '../assets/images/reaction.png';
 import {
   clearActionsStatus,
-  setFirstActionPressed,
+  setFirstActionPressed, setIsFirstClick, setIsSoundOn,
   setSecondActionPressed,
   setThirdActionPressed,
 } from '../store/mainSlice';
@@ -28,6 +28,7 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
   const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
 
   const isFirstActionPressed = useAppSelector((store) => store.main.isFirstActionPressed);
@@ -58,6 +59,11 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
   };
 
   const handleActionFirst = () => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false))
+    }
+
     handleAnimationStart(animations[currentDay - 1]?.firstAction[selectedSeedId]);
 
     setTimeout(() => {
@@ -68,6 +74,11 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
   };
 
   const handleActionSecond = () => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false))
+    }
+
     handleAnimationStart(animations[currentDay - 1]?.secondAction[selectedSeedId]);
     dispatch(setSecondActionPressed(true));
     setTimeout(() => {
@@ -76,6 +87,11 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
   };
 
   const handleActionThird = () => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false))
+    }
+
     if (currentDay === 1) {
       setChangeName(!isChangeName)
     } else {

@@ -5,8 +5,8 @@ import yellowSeed from '../assets/images/yellowSeed.png';
 import whiteSeed from '../assets/images/whiteSeed.png';
 import redSeed from '../assets/images/redSeed.png';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../store/store';
-import { setSeedId } from '../store/mainSlice';
+import {useAppDispatch, useAppSelector} from '../store/store';
+import {setIsFirstClick, setIsSoundOn, setSeedId} from '../store/mainSlice';
 import {useEffect, useState} from "react";
 
 const mainButtons = [
@@ -30,6 +30,7 @@ const mainButtons = [
 const Start = () => {
   const [animation, setAnimation] = useState<number | null>(null);
   const [animations, setAnimations] = useState<any[]>([]);
+  const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -53,6 +54,11 @@ const Start = () => {
   }, []);
 
   const handleChooseSeed = (id: number) => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false))
+    }
+
     dispatch(setSeedId(id));
     setAnimation(id);
     setTimeout(() => {
