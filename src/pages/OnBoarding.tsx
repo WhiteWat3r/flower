@@ -9,19 +9,19 @@ import Message from '../ui/Message';
 // import { useWindowSize } from '../hooks/useWindowSize';
 // bg-onBoarding
 
-// const promoText = [
-//   [
-//     '— Спасибо, что даешь мне жизнь! Вижу, ты уже знаком с моими друзьями из Flowwow. Держи бонусы на новую покупку!',
-//     '%сервисное сообщение%',
-//   ],
-//   [
-//     '— Спасибо, что даешь мне жизнь! Держи промокод в подарок от моих друзей из Flowwow',
-//     '%промокод% ',
-//   ],
-//   [
-//     '— Спасибо, что даешь мне жизнь! Вижу, что ты еще не авторизовался в Flowwow. Если хочешь продолжить игру, авторизуйся в сервисе.',
-//   ],
-// ];
+const promoText = [
+  [
+    '— Спасибо, что даешь мне жизнь! Вижу, ты уже знаком с моими друзьями из Flowwow. Держи бонусы на новую покупку!',
+    '%сервисное сообщение%',
+  ],
+  [
+    '— Спасибо, что даешь мне жизнь! Держи промокод в подарок от моих друзей из Flowwow',
+    '%промокод% ',
+  ],
+  [
+    '— Спасибо, что даешь мне жизнь! Вижу, что ты еще не авторизовался в Flowwow. Если хочешь продолжить игру, авторизуйся в сервисе.',
+  ],
+];
 
 const seedText = [
   [
@@ -45,10 +45,10 @@ const messages = [
 
 const OnBoarding = () => {
   const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const navigate = useNavigate();
   console.log(selectedSeedId);
-  // const userStatus = 2; // не было покупок/были/неавторизован
+  const userStatus = 1; // не было покупок/были/неавторизован
 
   const handleContinue = () => {
     step < 3 ? setStep(step + 1) : navigate('/tasks');
@@ -60,8 +60,8 @@ const OnBoarding = () => {
 
   const renderMessage = () => {
     switch (step) {
-      // case 0:
-      //   return promoText[userStatus];
+      case 0:
+        return promoText[userStatus];
       case 1:
         return seedText[selectedSeedId];
       case 2:
