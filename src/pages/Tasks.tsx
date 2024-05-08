@@ -6,31 +6,6 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Input from '../ui/Input';
 
-//название анимации - 1_2_2      --- 1 ДЕНЬ, 2 действие, 2 - id цветка - красный
-
-import animation1_1 from '../assets/animations/1/animation1_1.json';
-import animation1_2 from '../assets/animations/1/animation1_2.json';
-import default1 from '../assets/animations/1/default1.json';
-
-import animation2_1_0 from '../assets/animations/2/2nd_day_Yellow_window.json';
-import animation2_1_1 from '../assets/animations/2/2nd_day_White_window.json';
-import animation2_1_2 from '../assets/animations/2/2nd_day_Red_window.json';
-
-import animation2_2_0 from  '../assets/animations/2/2nd_day_Yellow_food.json';
-import animation2_2_1 from '../assets/animations/2/2nd_day_White_food.json';
-import animation2_2_2 from '../assets/animations/2/2nd_day_Red_food.json';
-
-import animation2_3_0 from '../assets/animations/2/2nd_day_Yellow_song.json';
-import animation2_3_1 from '../assets/animations/2/2nd_day_White_song.json';
-import animation2_3_2 from '../assets/animations/2/2nd_day_Red_song.json';
-
-import default2_0 from '../assets/animations/2/2nd_day_Yellow_sad_default_flower.json';
-import default2_1 from '../assets/animations/2/2nd_day_White_sad_default_flower.json';
-import default2_2 from '../assets/animations/2/2nd_day_Red_sad_default_flower.json';
-
-// import happyFlower from '../assets/animations/1st_day/1st_day_happy_default_flower.json';
-// import sadFlower from '../assets/animations/1st_day/1st_day_sad_default_flower.json';
-
 import reactionImg from '../assets/images/reaction.png';
 import {
   clearActionsStatus,
@@ -39,26 +14,6 @@ import {
   setThirdActionPressed,
 } from '../store/mainSlice';
 
-const animations = [
-  {
-    firstAction: [animation1_1, animation1_1, animation1_1],
-    secondAction: [animation1_2, animation1_2, animation1_2],
-    thirdAction: [null, null, null],
-    default: [default1, default1,  default1],
-  },
-  {
-    firstAction: [animation2_1_0, animation2_1_1, animation2_1_2],
-    secondAction: [animation2_2_0, animation2_2_1, animation2_2_2],
-    thirdAction: [animation2_3_0, animation2_3_1, animation2_3_2],
-    default: [default2_0, default2_1,  default2_2],
-  },
-  {
-    firstAction: [animation2_1_0, animation2_1_1, animation2_1_2],
-    secondAction: [animation2_2_0, animation2_2_1, animation2_2_2],
-    thirdAction: [animation2_3_0, animation2_3_1, animation2_3_2],
-    default: [default2_0, default2_1,  default2_2],
-  }, //по дням
-];
 
 
 const reactions = [
@@ -67,7 +22,9 @@ const reactions = [
   ['— Спасибо а то неохота листья морозить', '— Кайф. Обожаю воду!', '— Немного странно, но мне нравится!' ],
 ] //по дням
 
-const Tasks = () => {
+const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
+  console.log(animations)
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -86,6 +43,7 @@ const Tasks = () => {
   const [animation, setAnimation] = useState<null | any>(null);
 
   const [isChangeName, setChangeName] = useState(false);
+
 
   const handleAnimationStart = (animationData: any) => {
     setAnimation(animationData);
@@ -197,7 +155,7 @@ const Tasks = () => {
     }
   }, [reaction]);
 
-  return (
+  return loaded?  (
     <div className="h-full flex flex-col justify-center items-center bg-white-bg px-[25px] pb-[20px] relative">
       <div className="w-full pointer-events-none pt-[100px] relative">
         {reaction && (
@@ -247,8 +205,7 @@ const Tasks = () => {
           </div>
         </div>
       )}
-    </div>
-  );
+    </div>) : undefined
 };
 
 export default Tasks;
