@@ -1,7 +1,7 @@
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from "../store/store.ts";
-import {setIsFirstClick, setIsSoundOn} from "../store/mainSlice.ts";
+import { useAppDispatch, useAppSelector } from '../store/store.ts';
+import { setIsFirstClick, setIsSoundOn } from '../store/mainSlice.ts';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Settings = () => {
   const dispatch = useAppDispatch();
 
   const toggleSound = () => {
-    dispatch(setIsFirstClick(false))
+    dispatch(setIsFirstClick(false));
     dispatch(setIsSoundOn());
   }; // включение/выключение звука
 
@@ -26,20 +26,18 @@ const Settings = () => {
         </h1>
 
         <ul className="flex flex-col w-[95%] gap-[15px] h-[210px]">
-          <li className='h-full'>
+          <li className="h-full">
             <Button type={'gameAction'} onClick={handleGoBack}>
               {'> Правила'}
             </Button>
           </li>
-          <li className='h-full'>
+          <li className="h-full">
             <Button type={'gameAction'} onClick={toggleSound}>
-               {isSoundOn ? '> Звук: выключить' : '> Звук: включить'}
+              {isSoundOn ? '> Звук: выключить' : '> Звук: включить'}
             </Button>
-
-
           </li>
-          <li className='h-full'>
-          <Button type={'gameAction'} onClick={() => navigate('/prizes')}>
+          <li className="h-full">
+            <Button type={'gameAction'} onClick={() => navigate('/prizes')}>
               {'> Мои призы'}
             </Button>
           </li>

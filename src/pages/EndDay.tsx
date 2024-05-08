@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import Button from '../ui/Button';
-// import SaveMail from '../components/SaveMail';
+import SaveMail from '../components/SaveMail';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { setCurrentDay, clearActionsStatus } from '../store/mainSlice';
@@ -27,7 +27,7 @@ const promoText = [
 ];
 
 const emailStatusText = [
-  ['— На сегодня задания кончились. Не забудь навестить цветомца завтра.'],
+  ['— На сегодня задания кончились. Не забудь навестить цветомца завтра.', '— Поделись почтой, чтобы мы напомнили о цветомце и прислали подарки.'],
   [
     '— На сегодня задания кончились. Не забудь навестить цветомца завтра. Пионы ведь тоже любят внимание и заботу!',
   ],
@@ -76,7 +76,7 @@ const EndDay = () => {
               <Message key={index} text={msg} />
           ))}
 
-          {/* {step === 1 && !emailStatus ? <SaveMail /> : ''} */}
+          {step === 1 && !emailStatus ? <SaveMail /> : ''}
         </div>
 
         <div className="mx-[10px] flex flex-col gap-[12px] justify-end first-letter:h-[20%] w-[95%] h-[60px]">
