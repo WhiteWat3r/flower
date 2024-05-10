@@ -27,11 +27,13 @@ const mainButtons = [
   },
 ];
 
-const Start = ({ flowerData }: { flowerData: any }) => {
+const Start = () => {
   const [animation, setAnimation] = useState<number | null>(null);
   const [animations, setAnimations] = useState<any[]>([]);
   const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
   const [setSeed, progress] = useSelectSeedMutation();
+
+  const flowerData = useAppSelector((store) => store.main?.flower);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -42,10 +44,11 @@ const Start = ({ flowerData }: { flowerData: any }) => {
       dispatch(setIsFirstClick(false));
     }
     try {
-      let seedColor = id === 0 ? 'yellow' : id === 1 ? 'white' : 'red';
-      await setSeed({ seed: seedColor });
       setAnimation(id);
-      setTimeout(() => {
+
+      let seedColor = id === 0 ? 'yellow' : id === 1 ? 'white' : 'red';
+      setTimeout(async () => {
+        await setSeed({ seed: seedColor });
         navigate(`/on-boarding`);
       }, 4000);
     } catch (error) {
@@ -72,15 +75,11 @@ const Start = ({ flowerData }: { flowerData: any }) => {
   }, []);
   console.log(flowerData);
 
-  const handleNavigate = () => {
+  useEffect(() => {
     if (flowerData?.id && !progress?.isLoading && !animation) {
       navigate(`/tasks`);
     }
-  };
-
-  useEffect(() => {
-    handleNavigate();
-  }, []);
+  }, [flowerData?.id]);
 
   return (
     <div

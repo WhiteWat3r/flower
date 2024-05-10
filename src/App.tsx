@@ -16,20 +16,20 @@ import { setFlower, setProfile } from './store/mainSlice.ts';
 export default function App() {
   const [animations, setAnimations] = useState<any[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [haveUuid, setHaveUuid] = useState(false);
   const [register, progress] = useRegisterMutation();
   const dispath = useAppDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = params.get('user_id');
-  const { data, isLoading } = useGetUserInfoQuery('');
+  const userId = sessionStorage.getItem('uuid');
+  const { data, isLoading } = useGetUserInfoQuery(userId );
 
   // console.log(data);
 
   useEffect(() => {
     dispath(setProfile(data?.user));
     dispath(setFlower(data?.flower));
-  }, [data, progress?.isLoading]);
+  }, [data, progress?.isLoading, userId]);
 
   useEffect(() => {
     const fetchAnimations = async () => {
@@ -151,7 +151,7 @@ export default function App() {
   const handleRegister = async () => {
     let response: ApiResponse;
     try {
-      response = await register({ uuid: '2311213211212221' });
+      response = await register({ uuid: user_id });
       console.log(response);
       if ('data' in response) {
         const data = response.data;
@@ -164,17 +164,16 @@ export default function App() {
 
   useEffect(() => {
     if (user_id) {
-      setHaveUuid(true);
       handleRegister();
     }
   }, []);
 
   return (
     !isLoading &&
-    haveUuid && (
+    userId && (
       <MobileContainer>
         <Routes>
-          <Route path="/" element={<Start flowerData={data?.flower} />} />
+          <Route path="/" element={<Start />} />
           <Route path="/on-boarding" element={<OnBoarding />} />
           <Route path="/tasks" element={<Tasks animations={animations} loaded={loaded} />} />
           <Route path="/end-day" element={<EndDay />} />
