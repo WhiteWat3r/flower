@@ -73,7 +73,7 @@ const Start = ({ flowerData }: { flowerData: any }) => {
 console.log(flowerData);
 
 const handleNavigate = () => {
-  if (flowerData.id && !progress?.isLoading && !animation) {
+  if (flowerData?.id && !progress?.isLoading && !animation) {
     navigate(`/tasks`);
   }
 }
