@@ -5,7 +5,7 @@ import healthImg from '../assets/images/health.png';
 import waterImg from '../assets/images/water.png';
 import happinessImg from '../assets/images/happiness.png';
 import { useAppSelector } from '../store/store';
-import {Link, useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const flowerRequirements = [
   {
@@ -27,9 +27,7 @@ const flowerRequirements = [
 
 const Header = () => {
   const location = useLocation();
-
-  const currentDay = useAppSelector((store) => store.main.currentDay);
-
+  const currentDay = useAppSelector((store) => store.main?.flower?.day_number);
 
   return (
     <header className="w-full absolute top-0 left-0 flex flex-col  px-[25px] gap-[15px] z-30">
@@ -38,23 +36,23 @@ const Header = () => {
           <img src={logo} alt="Логотип" className="h-[45px]" />
           <span className="text-red-custom text-[22px]">flowwow</span>
         </div>
-        <span className="uppercase text-custom-blue text-[17px]">День {currentDay}/3</span>
+        <span className="uppercase text-custom-blue text-[17px]">
+          День {currentDay ? currentDay : 1}/3
+        </span>
         <Link to={'/settings'}>
           <img src={settingsImg} alt="Настройки" className="h-[26px]" />
         </Link>
       </div>
-      {
-          location.pathname !== '/result' &&
-          <ul className="flex gapp-[10px] justify-between">
-            {flowerRequirements.map((req) => (
-                <li key={req.id} className="w-[30%]  h-[14px]  relative flex items-center justify-end">
-                  <span className="border-2 border-red-custom w-[95%] h-[10px] shadow-default"></span>
-                  <img src={req.img} className="h-[15px] absolute left-0" alt=""/>
-                </li>
-            ))}
-          </ul>
-      }
-
+      {location.pathname !== '/result' && (
+        <ul className="flex gapp-[10px] justify-between">
+          {flowerRequirements.map((req) => (
+            <li key={req.id} className="w-[30%]  h-[14px]  relative flex items-center justify-end">
+              <span className="border-2 border-red-custom w-[95%] h-[10px] shadow-default"></span>
+              <img src={req.img} className="h-[15px] absolute left-0" alt="" />
+            </li>
+          ))}
+        </ul>
+      )}
     </header>
   );
 };

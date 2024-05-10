@@ -1,8 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IGameState {
-  selectedSeedId: number;
-  currentDay: number;
+  profile: {
+    type: number;
+    id: number;
+    uuid: string;
+    modules: [],
+    email: string;
+    add_date: string
+};
+flower: {
+  id: number,
+  name: string,
+  seed: number,
+  add_date: string,
+  start_day: number,
+  day_number: number
+}
+  // selectedSeedId: number;
+  // currentDay: number;
   isFirstActionPressed: boolean;
   isSecondActionPressed: boolean;
   isThirdActionPressed: boolean;
@@ -11,8 +27,24 @@ interface IGameState {
 }
 
 const mainState: IGameState = {
-  selectedSeedId: 0,
-  currentDay: 1,
+  flower: {
+    id: 0,
+    name: '',
+    seed: 0,
+    add_date: '',
+    start_day: 0,
+    day_number: 0,
+  },
+  profile: {
+    type: 0,
+    id: 0,
+    uuid: '',
+    modules: [],
+    email: '',
+    add_date: ''
+},
+  // selectedSeedId: 0,
+  // currentDay: 1,
   isFirstActionPressed: false,
   isSecondActionPressed: false,
   isThirdActionPressed: false,
@@ -24,12 +56,26 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState: mainState,
   reducers: {
-    setSeedId: (state, action) => {
-      state.selectedSeedId = action.payload;
+    setProfile: (state, action) => {
+      state.profile = action.payload;
     },
-    setCurrentDay: (state, action) => {
-      state.currentDay = action.payload;
+    setFlower: (state, action) => {
+      const seedMap: { [key: string]: number } = {
+        white: 1,
+        red: 2,
+        yellow: 0,
+      };
+      state.flower = {
+        ...action.payload,
+        seed: seedMap[action.payload?.seed] !== undefined ? seedMap[action.payload?.seed] : action.payload?.seed,
+      };
     },
+    // setSeedId: (state, action) => {
+    //   state.selectedSeedId = action.payload;
+    // },
+    // setCurrentDay: (state, action) => {
+    //   state.currentDay = action.payload;
+    // },
     setFirstActionPressed: (state, action) => {
       state.isFirstActionPressed = action.payload;
     },
@@ -54,12 +100,14 @@ export const mainSlice = createSlice({
 });
 
 export const {
-  setSeedId,
-  setCurrentDay,
+  // setSeedId,
+  // setCurrentDay,
   setThirdActionPressed,
   setSecondActionPressed,
   setFirstActionPressed,
   clearActionsStatus,
   setIsSoundOn,
-  setIsFirstClick
+  setProfile,
+  setIsFirstClick,
+  setFlower
 } = mainSlice.actions;

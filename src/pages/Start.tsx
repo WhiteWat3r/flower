@@ -1,13 +1,13 @@
-
 import Button from '../ui/Button';
 import Lottie from 'lottie-react';
 import yellowSeed from '../assets/images/yellowSeed.png';
 import whiteSeed from '../assets/images/whiteSeed.png';
 import redSeed from '../assets/images/redSeed.png';
 import { useNavigate } from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../store/store';
-import {setIsFirstClick, setIsSoundOn, setSeedId} from '../store/mainSlice';
-import {useEffect, useState} from "react";
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { setIsFirstClick, setIsSoundOn } from '../store/mainSlice';
+import { useEffect, useState } from 'react';
+import { useSelectSeedMutation } from '../api/mainApi';
 
 const mainButtons = [
   {
@@ -27,13 +27,31 @@ const mainButtons = [
   },
 ];
 
-const Start = () => {
+const Start = ({ flowerData }: { flowerData: any }) => {
   const [animation, setAnimation] = useState<number | null>(null);
   const [animations, setAnimations] = useState<any[]>([]);
   const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
+  const [setSeed, progress ] = useSelectSeedMutation();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const handleChooseSeed = async (id: number) => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false));
+    }
+    try {
+      let seedColor = id === 0 ? 'yellow' : id === 1 ? 'white' : 'red';
+      await setSeed({ seed: seedColor });
+      setAnimation(id);
+      setTimeout(() => {
+        navigate(`/on-boarding`);
+      }, 4000);
+    } catch (error) {
+      console.log('Ошибка:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchAnimations = async () => {
@@ -43,7 +61,7 @@ const Start = () => {
           fetch('/assets/animations/1/whiteSeedAnimation.json'),
           fetch('/assets/animations/1/redSeedAnimation.json'),
         ]);
-        const animationJsons = await Promise.all(animationResponses.map(res => res.json()));
+        const animationJsons = await Promise.all(animationResponses.map((res) => res.json()));
         setAnimations(animationJsons);
       } catch (error) {
         console.error('Error fetching animations:', error);
@@ -52,47 +70,45 @@ const Start = () => {
 
     fetchAnimations();
   }, []);
+console.log(flowerData);
 
-  const handleChooseSeed = (id: number) => {
-    if (isFirstClick) {
-      dispatch(setIsSoundOn());
-      dispatch(setIsFirstClick(false))
-    }
+const handleNavigate = () => {
+  if (flowerData.id && !progress?.isLoading && !animation) {
+    navigate(`/tasks`);
+  }
+}
 
-    dispatch(setSeedId(id));
-    setAnimation(id);
-    setTimeout(() => {
-      navigate(`/on-boarding`);
-    }, 4000);
-  };
+
+  useEffect(() => {
+    handleNavigate()
+  }, []);
 
   return (
-      <div
-          className={`h-full flex flex-col justify-end items-center  px-[25px] pb-[20px]  ${
-              animation !== null ? 'bg-white-bg' : 'bg-custom-pink'
-          }`}
-      >
-        {animation !== null ? (
-            <div className={'w-full'}>
-              <Lottie animationData={animations[animation]} autoplay loop />
-            </div>
-        ) : (
-            <div className="h-[82%] bg-custom-yellow w-full border-2 border-red-custom shadow-default pb-[50px] flex flex-col justify-between">
-              <h2 className="text-[34px] leading-[132%] text-center text-red-custom mt-[20px] mb-[30px]">
-                Выбери семечку
-              </h2>
-              <ul className="mx-[10px] flex flex-col gap-[15px] justify-between h-[70%]">
-                {mainButtons.map((button) => (
-                    <li key={button.id} className="h-[100px]">
-                      <Button type={'seed'} onClick={() => handleChooseSeed(button.id)} img={button.img}>
-                        {button.text}
-                      </Button>
-                    </li>
-                ))}
-              </ul>
-            </div>
-        )}
-      </div>
+    <div
+      className={`h-full flex flex-col justify-end items-center  px-[25px] pb-[20px]  ${
+        animation !== null ? 'bg-white-bg' : 'bg-custom-pink'
+      }`}>
+      {animation !== null ? (
+        <div className={'w-full'}>
+          <Lottie animationData={animations[animation]} autoplay loop />
+        </div>
+      ) : (
+        <div className="h-[82%] bg-custom-yellow w-full border-2 border-red-custom shadow-default pb-[50px] flex flex-col justify-between">
+          <h2 className="text-[34px] leading-[132%] text-center text-red-custom mt-[20px] mb-[30px]">
+            Выбери семечку
+          </h2>
+          <ul className="mx-[10px] flex flex-col gap-[15px] justify-between h-[70%]">
+            {mainButtons.map((button) => (
+              <li key={button.id} className="h-[100px]">
+                <Button type={'seed'} onClick={() => handleChooseSeed(button.id)} img={button.img}>
+                  {button.text}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -7,10 +7,8 @@ import whiteFlower from '../assets/images/whiteFlower.png';
 import redFlower from '../assets/images/redFlower.png';
 import yellowFlower from '../assets/images/yellowFlower.png';
 
-
 import vk from '../assets/images/vk.png';
 import tg from '../assets/images/tg.png';
-
 
 const resultText = [
   { img: yellowFlower, name: 'Пион Бартзелла' },
@@ -19,15 +17,15 @@ const resultText = [
 ];
 
 const Result = () => {
-//   const [step, setStep] = useState(0);
-//   const navigate = useNavigate();
-//   const dispatch = useAppDispatch();
+  //   const [step, setStep] = useState(0);
+  //   const navigate = useNavigate();
+  //   const dispatch = useAppDispatch();
 
-//   const userStatus = 0; // не было покупок/были/неавторизован
-//   const emailStatus = 0; // не указывал/указывал почту
-  const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
+  //   const userStatus = 0; // не было покупок/были/неавторизован
+  //   const emailStatus = 0; // не указывал/указывал почту
+  const selectedSeedId = useAppSelector((store) => store.main?.flower?.seed);
 
-//   const currentDay = useAppSelector((store) => store.main.currentDay); // 2 день
+  //   const currentDay = useAppSelector((store) => store.main.currentDay); // 2 день
 
   const handleClick = () => {};
 
@@ -66,7 +64,7 @@ const Result = () => {
               <img src={vk} alt="Вконтакте" className=" w-[70%]" />
             </Button>
             <Button type={'nav'} onClick={handleClick}>
-              <img src={tg} alt="Телеграмм"  className=" w-[70%]"/>
+              <img src={tg} alt="Телеграмм" className=" w-[70%]" />
             </Button>
           </div>
         </div>

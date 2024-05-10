@@ -5,10 +5,6 @@ import { useAppSelector } from '../store/store';
 import SaveMail from '../components/SaveMail';
 import Message from '../ui/Message';
 
-// import onBoardingImg from '../assets/images/onBoardingImg.png';
-// import { useWindowSize } from '../hooks/useWindowSize';
-// bg-onBoarding
-
 const promoText = [
   [
     '— Спасибо, что даешь мне жизнь! Вижу, ты уже знаком с моими друзьями из Flowwow. Держи бонусы на новую покупку!',
@@ -44,10 +40,11 @@ const messages = [
 ];
 
 const OnBoarding = () => {
-  const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
+  // const { data } = useGetUserInfoQuery('');
+
+  const selectedSeedId = useAppSelector((store) => store.main?.flower?.seed);
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  console.log(selectedSeedId);
   const userStatus = 1; // не было покупок/были/неавторизован
 
   const handleContinue = () => {
@@ -77,11 +74,12 @@ const OnBoarding = () => {
     <div className="h-full flex flex-col justify-end items-center bg-custom-pink px-[25px] pb-[20px]">
       <div className="h-[82%] bg-custom-yellow w-full border-2 border-red-custom shadow-default pb-[15px] flex flex-col justify-between items-center ">
         {step === 1 ? (
-            <h1 className="text-red-custom text-[34px] text-center mt-[19px] leading-[132%]">
-              Корни пущены!
-            </h1>) : (<span/>
-          )}
-
+          <h1 className="text-red-custom text-[34px] text-center mt-[19px] leading-[132%]">
+            Корни пущены!
+          </h1>
+        ) : (
+          <span />
+        )}
 
         <div className="flex flex-col gap-[20px] items-center self-center w-full">
           {renderMessage()?.map((msg, index) => (

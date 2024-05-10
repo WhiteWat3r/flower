@@ -3,48 +3,42 @@ import Lottie from 'lottie-react';
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import Input from '../ui/Input';
 
 import reactionImg from '../assets/images/reaction.png';
-import {
-  clearActionsStatus,
-  setFirstActionPressed, setIsFirstClick, setIsSoundOn,
-  setSecondActionPressed,
-  setThirdActionPressed,
-} from '../store/mainSlice';
-
-
+import { setIsFirstClick, setIsSoundOn } from '../store/mainSlice';
+import { useDoTaskMutation, useGetTasksQuery, useSetFlowerNameMutation } from '../api/mainApi';
+import { ITask } from '../types/task';
 
 const reactions = [
-    ['— Потрясающе! Теперь есть куда пускать корни', '', '— Ура! Теперь у меня тоже есть имя' ],
-  ['— Спасибо, было душновато', '— Во-о-от теперь заживем!', '— Хм, неожиданно. Красивый жест!' ],
-  ['— Спасибо а то неохота листья морозить', '— Кайф. Обожаю воду!', '— Немного странно, но мне нравится!' ],
-] //по дням
+  ['— Потрясающе! Теперь есть куда пускать корни', '', '— Ура! Теперь у меня тоже есть имя'],
+  ['— Спасибо, было душновато', '— Во-о-от теперь заживем!', '— Хм, неожиданно. Красивый жест!'],
+  [
+    '— Спасибо а то неохота листья морозить',
+    '— Кайф. Обожаю воду!',
+    '— Немного странно, но мне нравится!',
+  ],
+]; //по дням
 
-const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
-  console.log(animations)
-
+const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => {
+  // console.log('animations', animations);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
-  const selectedSeedId = useAppSelector((store) => store.main.selectedSeedId);
+  const currentDay = useAppSelector((store) => store.main.flower?.day_number);
+  const selectedSeedId = useAppSelector((store) => store.main?.flower?.seed);
 
-  const isFirstActionPressed = useAppSelector((store) => store.main.isFirstActionPressed);
-  const isSecondActionPressed = useAppSelector((store) => store.main.isSecondActionPressed);
-  const isThirdActionPressed = useAppSelector((store) => store.main.isThirdActionPressed);
+  const [setFlowerNameMutation] = useSetFlowerNameMutation();
+  const { data } = useGetTasksQuery('');
+  const [doTask] = useDoTaskMutation();
 
   const [flowerName, setFlowerName] = useState('');
-
+  const [isButtonsDisabled, setButtonsDisabled] = useState(false);
   const [reaction, setReaction] = useState('');
-
-  const currentDay = useAppSelector((store) => store.main.currentDay);
-
   const [animation, setAnimation] = useState<null | any>(null);
-
   const [isChangeName, setChangeName] = useState(false);
-
 
   const handleAnimationStart = (animationData: any) => {
     setAnimation(animationData);
@@ -57,111 +51,65 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
   const handleEndingDay = () => {
     navigate(currentDay < 3 ? '/end-day' : '/result');
   };
-
-  const handleActionFirst = () => {
-    if (isFirstClick) {
-      dispatch(setIsSoundOn());
-      dispatch(setIsFirstClick(false))
-    }
-
-    handleAnimationStart(animations[currentDay - 1]?.firstAction[selectedSeedId]);
-
-    setTimeout(() => {
-      setReaction(reactions[currentDay-1][0]);
-    }, 6000);
-
-    dispatch(setFirstActionPressed(true));
-  };
-
-  const handleActionSecond = () => {
-    if (isFirstClick) {
-      dispatch(setIsSoundOn());
-      dispatch(setIsFirstClick(false))
-    }
-
-    handleAnimationStart(animations[currentDay - 1]?.secondAction[selectedSeedId]);
-    dispatch(setSecondActionPressed(true));
-    setTimeout(() => {
-      setReaction(reactions[currentDay-1][1]);
-    }, 6000);
-  };
-
-  const handleActionThird = () => {
-    if (isFirstClick) {
-      dispatch(setIsSoundOn());
-      dispatch(setIsFirstClick(false))
-    }
-
-    if (currentDay === 1) {
-      setChangeName(!isChangeName)
-    } else {
-      dispatch(setThirdActionPressed(true));
-      setTimeout(() => {
-        setReaction(reactions[currentDay-1][2]);
-      }, 6000);
-    }
-
-    handleAnimationStart(animations[currentDay - 1]?.thirdAction[selectedSeedId]);
-  };
-
-  const dayActions = [
-    [
-      {
-        text: '> Разрыхлить землю',
-        onClick: handleActionFirst,
-        disabled: isFirstActionPressed,
-      },
-      {
-        text: '> Сдуть пылинки',
-        onClick: handleActionSecond,
-        disabled: isSecondActionPressed,
-      },
-
-      { text: '> Дать цветку имя', onClick: handleActionThird, disabled: isThirdActionPressed },
-    ],
-    [
-      { text: '> Открыть форточку', onClick: handleActionFirst, disabled: isFirstActionPressed },
-      { text: '> Удобрить', onClick: handleActionSecond, disabled: isSecondActionPressed },
-      { text: '> Спеть песенку', onClick: handleActionThird, disabled: isThirdActionPressed },
-    ],
-    [
-      { text: '> Закрыть форточку', onClick: handleActionFirst, disabled: isFirstActionPressed },
-      { text: '> Обильно полить', onClick: handleActionSecond, disabled: isSecondActionPressed },
-      { text: '> Станцевать рейв', onClick: handleActionThird, disabled: isThirdActionPressed },
-    ],
-  ];
-
-  const handleButtonClick = (onClick: () => void) => {
-    onClick();
-    setTimeout(() => {
-      resetAnimation();
-    }, 6000);
-  };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFlowerName(e.target.value);
   };
 
   const handleSaveFlowerName = () => {
+    setFlowerNameMutation(flowerName);
     setChangeName(false);
-
-    setReaction(reactions[currentDay-1][2]);
-
-
-
-    dispatch(setThirdActionPressed(true));
-  };
-
-  useEffect(() => {
-    dispatch(clearActionsStatus());
-  }, []); // удалить потом
-
-  useEffect(() => {
-    if (isFirstActionPressed && isSecondActionPressed && isThirdActionPressed) {
+    doTask({ task_name: 'give_the_flower_a_name' });
+    setReaction(reactions[currentDay - 1][2]);
+    othersTasksCompleted(2) === 2 &&
       setTimeout(() => {
         handleEndingDay();
-      }, 10000);
+      }, 9000);
+  };
+
+  const othersTasksCompleted = useMemo(
+    () => (currentTaskNumber: number) =>
+      data?.tasks.filter(
+        (task: ITask, index: number) => index !== currentTaskNumber && task.status === '1',
+      ).length,
+    [data?.tasks],
+  );
+
+  const executeTask = (taskName: string, taskNumber: number) => {
+    if (isFirstClick) {
+      dispatch(setIsSoundOn());
+      dispatch(setIsFirstClick(false));
     }
-  }, [isFirstActionPressed, isSecondActionPressed, isThirdActionPressed]);
+
+    taskNumber === 0
+      ? handleAnimationStart(animations[currentDay - 1]?.firstAction[selectedSeedId])
+      : taskNumber === 1
+      ? handleAnimationStart(animations[currentDay - 1]?.secondAction[selectedSeedId])
+      : handleAnimationStart(animations[currentDay - 1]?.thirdAction[selectedSeedId]);
+
+    setTimeout(() => {
+      resetAnimation();
+    }, 6000);
+
+    if (taskName === 'give_the_flower_a_name') {
+      setChangeName(!isChangeName);
+    } else {
+      doTask({ task_name: taskName });
+      setButtonsDisabled(true);
+      setTimeout(() => {
+        setReaction(reactions[currentDay - 1][taskNumber]);
+        setButtonsDisabled(false);
+      }, 6000);
+
+      setTimeout(() => {
+        setReaction('');
+      }, 9000);
+
+      othersTasksCompleted(taskNumber) === 2 &&
+        setTimeout(() => {
+          handleEndingDay();
+        }, 12000);
+    }
+  };
 
   useEffect(() => {
     if (reaction) {
@@ -171,11 +119,14 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
     }
   }, [reaction]);
 
-  return loaded?  (
+  return loaded ? (
     <div className="h-full flex flex-col justify-center items-center bg-white-bg px-[25px] pb-[20px] relative">
       <div className="w-full pointer-events-none pt-[100px] relative">
         {reaction && (
-          <span className={`absolute ${currentDay ===1 ? 'bottom-[50%]' : 'bottom-[60%]'}  left-[20%] z-10 border-2 border-custom-blue p-[10px] w-[220px] bg-custom-white shadow-default text-red-custom`}>
+          <span
+            className={`absolute ${
+              currentDay == 1 ? 'bottom-[50%]' : 'bottom-[60%]'
+            }  left-[20%] z-10 border-2 border-custom-blue p-[10px] w-[220px] bg-custom-white shadow-default text-red-custom`}>
             {reaction}
             <img
               src={reactionImg}
@@ -184,24 +135,25 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
           </span>
         )}
         <Lottie
-          animationData={animation ? animation : animations[currentDay - 1].default[selectedSeedId]}
+          animationData={
+            animation ? animation : animations[currentDay - 1]?.default[selectedSeedId]
+          }
           className="h-full w-full"
         />
       </div>
-      <div className="absolute flex flex-col gap-[12px] w-full px-[25px] bottom-[17px]">
-        {dayActions[currentDay - 1].map((action, index) => (
+      <div
+        className={`absolute flex flex-col gap-[12px] w-full px-[25px] bottom-[17px] ${
+          isButtonsDisabled ? 'pointer-events-none' : ''
+        }`}>
+        {data?.tasks?.map((task: ITask, index: number) => (
           <Button
-            key={index}
+            key={task.id}
             type={'gameAction'}
-            disabled={action.disabled}
-            onClick={() => handleButtonClick(action.onClick)}>
-            {action.text}
+            disabled={task.status === '0' ? false : true}
+            onClick={() => executeTask(task.action, index)}>
+            {`> ${task.caption}`}
           </Button>
         ))}
-
-        {/* <Button type={'gameAction'} disabled={false} onClick={() => navigate('/end-day')}>
-          конец дня
-        </Button> */}
       </div>
 
       {isChangeName && (
@@ -221,7 +173,8 @@ const Tasks = ({animations, loaded} : {animations: any, loaded: boolean}) => {
           </div>
         </div>
       )}
-    </div>) : undefined
+    </div>
+  ) : undefined;
 };
 
 export default Tasks;
