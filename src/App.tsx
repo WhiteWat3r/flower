@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import OnBoarding from './pages/OnBoarding';
 import { MobileContainer } from './components/MobileContainer';
 import Start from './pages/Start';
@@ -16,13 +16,15 @@ import { setFlower, setProfile } from './store/mainSlice.ts';
 export default function App() {
   const [animations, setAnimations] = useState<any[]>([]);
   const [loaded, setLoaded] = useState(false);
-
+  const [haveUuid, setHaveUuid] = useState(false);
   const [register, progress] = useRegisterMutation();
   const dispath = useAppDispatch();
-
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const user_id = params.get('user_id');
   const { data, isLoading } = useGetUserInfoQuery('');
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     dispath(setProfile(data?.user));
@@ -153,7 +155,7 @@ export default function App() {
       console.log(response);
       if ('data' in response) {
         const data = response.data;
-        localStorage.setItem('uuid', data.uuid);
+        sessionStorage.setItem('uuid', data.uuid);
       }
     } catch (error) {
       console.log('ошибка регистрации');
@@ -161,15 +163,15 @@ export default function App() {
   };
 
   useEffect(() => {
-    const uuid = localStorage.getItem('uuid');
-
-    if (!uuid) {
+    if (user_id) {
+      setHaveUuid(true);
       handleRegister();
     }
   }, []);
 
   return (
-    !isLoading && (
+    !isLoading &&
+    haveUuid && (
       <MobileContainer>
         <Routes>
           <Route path="/" element={<Start flowerData={data?.flower} />} />

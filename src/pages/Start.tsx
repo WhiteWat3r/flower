@@ -31,7 +31,7 @@ const Start = ({ flowerData }: { flowerData: any }) => {
   const [animation, setAnimation] = useState<number | null>(null);
   const [animations, setAnimations] = useState<any[]>([]);
   const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
-  const [setSeed, progress ] = useSelectSeedMutation();
+  const [setSeed, progress] = useSelectSeedMutation();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -70,17 +70,16 @@ const Start = ({ flowerData }: { flowerData: any }) => {
 
     fetchAnimations();
   }, []);
-console.log(flowerData);
+  console.log(flowerData);
 
-const handleNavigate = () => {
-  if (flowerData?.id && !progress?.isLoading && !animation) {
-    navigate(`/tasks`);
-  }
-}
-
+  const handleNavigate = () => {
+    if (flowerData?.id && !progress?.isLoading && !animation) {
+      navigate(`/tasks`);
+    }
+  };
 
   useEffect(() => {
-    handleNavigate()
+    handleNavigate();
   }, []);
 
   return (

@@ -6,7 +6,7 @@ export const mainApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `https://flowwow-backend.pav.studio`,
     prepareHeaders: (headers) => {
-      const uuid = localStorage.getItem('uuid');
+      const uuid = sessionStorage.getItem('uuid');
       if (uuid) {
         headers.set('uuid', uuid);
       }
