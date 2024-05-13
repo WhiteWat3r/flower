@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAppSelector } from '../store/store';
 import SaveMail from '../components/SaveMail';
 import Message from '../ui/Message';
+import { baseUrl } from '../utils/constants';
 
 const promoText = [
   [
@@ -21,10 +22,10 @@ const promoText = [
 
 const seedText = [
   [
-    '— Разреши представиться, я белый пион Дюшес де Немур, потомственный француз с ароматом ландышей. Белый цвет — символ искренности. Запомни это, если будешь собирать со мной букет.',
+    '— Я желтый пион Бартзелла, красивейший в своем роде. Букеты моего цвета — это про надежность и уверенность.Давай скорее меня выращивать!',
   ],
   [
-    '— Я желтый пион Бартзелла,красивейший в своем роде. Букеты моего цвета — это про надежность и уверенность.Давай скорее меня выращивать!',
+    '— Разреши представиться, я белый пион Дюшес де Немур, потомственный француз с ароматом ландышей. Белый цвет — символ искренности. Запомни это, если будешь собирать со мной букет.',
   ],
   [
     '— Я красный пион сорта Ред Шарм, цветок любви и страсти. Между прочим, у меня золотая медаль Ассоциации любителей пионов. Мои лепестки до трех недель остаются свежими!',
@@ -102,6 +103,28 @@ const OnBoarding = () => {
             </Button>
           </li>
         </ul>
+
+
+
+
+        <Button type={'nav'}>
+              <a
+                href={`https://vk.com/share.php?url=${baseUrl}share/${
+                  selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
+                }.html`}>
+                <img src={'asdasd'} alt="Вконтакте" className=" w-[70%]" />
+              </a>
+            </Button>
+            <Button type={'nav'}>
+              <a
+                href={`https://telegram.me/share/url?url=${baseUrl}share/${
+                  selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
+                }.html`}>
+                <img src={'asdasd'} alt="Телеграмм" className=" w-[70%]" />
+              </a>
+            </Button>
+
+
       </div>
     </div>
   );

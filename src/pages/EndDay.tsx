@@ -2,8 +2,7 @@ import { useState } from 'react';
 import Button from '../ui/Button';
 import SaveMail from '../components/SaveMail';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { clearActionsStatus } from '../store/mainSlice';
+import { useAppSelector } from '../store/store';
 import Message from '../ui/Message.tsx';
 
 const promoText = [
@@ -39,7 +38,6 @@ const emailStatusText = [
 const EndDay = () => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const userStatus = 0; // не было покупок/были/неавторизован
 
@@ -54,8 +52,6 @@ const EndDay = () => {
       // dispatch(setCurrentDay(currentDay + 1));
       navigate('/tasks');
     }
-
-    dispatch(clearActionsStatus());
   };
 
   const renderMessage = () => {

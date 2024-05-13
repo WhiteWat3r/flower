@@ -5,23 +5,21 @@ interface IGameState {
     type: number;
     id: number;
     uuid: string;
-    modules: [],
+    modules: [];
     email: string;
-    add_date: string
-};
-flower: {
-  id: number,
-  name: string,
-  seed: number,
-  add_date: string,
-  start_day: number,
-  day_number: number
-}
+    add_date: string;
+  };
+  flower: {
+    id: number;
+    name: string;
+    seed: number;
+    add_date: string;
+    start_day: number;
+    day_number: number;
+  };
   // selectedSeedId: number;
   // currentDay: number;
-  isFirstActionPressed: boolean;
-  isSecondActionPressed: boolean;
-  isThirdActionPressed: boolean;
+  isBackgroundMusicPaused: boolean;
   isSoundOn: boolean;
   isFirstClick: boolean;
 }
@@ -41,15 +39,14 @@ const mainState: IGameState = {
     uuid: '',
     modules: [],
     email: '',
-    add_date: ''
-},
+    add_date: '',
+  },
   // selectedSeedId: 0,
   // currentDay: 1,
-  isFirstActionPressed: false,
-  isSecondActionPressed: false,
-  isThirdActionPressed: false,
+
   isSoundOn: false,
-  isFirstClick: true
+  isFirstClick: true,
+  isBackgroundMusicPaused: false,
 };
 
 export const mainSlice = createSlice({
@@ -59,6 +56,9 @@ export const mainSlice = createSlice({
     setProfile: (state, action) => {
       state.profile = action.payload;
     },
+    setBackgorindMusicPaused: (state, action) => {
+      state.isBackgroundMusicPaused = action.payload;
+    },
     setFlower: (state, action) => {
       const seedMap: { [key: string]: number } = {
         white: 1,
@@ -67,47 +67,19 @@ export const mainSlice = createSlice({
       };
       state.flower = {
         ...action.payload,
-        seed: seedMap[action.payload?.seed] !== undefined ? seedMap[action.payload?.seed] : action.payload?.seed,
+        seed:
+          seedMap[action.payload?.seed] !== undefined
+            ? seedMap[action.payload?.seed]
+            : action.payload?.seed,
       };
-    },
-    // setSeedId: (state, action) => {
-    //   state.selectedSeedId = action.payload;
-    // },
-    // setCurrentDay: (state, action) => {
-    //   state.currentDay = action.payload;
-    // },
-    setFirstActionPressed: (state, action) => {
-      state.isFirstActionPressed = action.payload;
-    },
-    setSecondActionPressed: (state, action) => {
-      state.isSecondActionPressed = action.payload;
-    },
-    setThirdActionPressed: (state, action) => {
-      state.isThirdActionPressed = action.payload;
-    },
-    clearActionsStatus: (state) => {
-      state.isFirstActionPressed = false;
-      state.isSecondActionPressed = false;
-      state.isThirdActionPressed = false;
     },
     setIsSoundOn: (state) => {
       state.isSoundOn = !state.isSoundOn;
     },
     setIsFirstClick: (state, action) => {
       state.isFirstClick = action.payload;
-    }
+    },
   },
 });
 
-export const {
-  // setSeedId,
-  // setCurrentDay,
-  setThirdActionPressed,
-  setSecondActionPressed,
-  setFirstActionPressed,
-  clearActionsStatus,
-  setIsSoundOn,
-  setProfile,
-  setIsFirstClick,
-  setFlower
-} = mainSlice.actions;
+export const { setIsSoundOn, setProfile, setIsFirstClick, setFlower, setBackgorindMusicPaused} = mainSlice.actions;

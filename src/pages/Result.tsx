@@ -1,5 +1,5 @@
 import Button from '../ui/Button';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../store/store';
 // import { setCurrentDay, clearActionsStatus } from '../store/mainSlice';
 
@@ -9,6 +9,7 @@ import yellowFlower from '../assets/images/yellowFlower.png';
 
 import vk from '../assets/images/vk.png';
 import tg from '../assets/images/tg.png';
+import { baseUrl } from '../utils/constants';
 
 const resultText = [
   { img: yellowFlower, name: 'Пион Бартзелла' },
@@ -17,23 +18,13 @@ const resultText = [
 ];
 
 const Result = () => {
-  //   const [step, setStep] = useState(0);
-  //   const navigate = useNavigate();
-  //   const dispatch = useAppDispatch();
-
-  //   const userStatus = 0; // не было покупок/были/неавторизован
-  //   const emailStatus = 0; // не указывал/указывал почту
   const selectedSeedId = useAppSelector((store) => store.main?.flower?.seed);
-
-  //   const currentDay = useAppSelector((store) => store.main.currentDay); // 2 день
-
-  const handleClick = () => {};
 
   return (
     <div className="h-full flex flex-col items-center bg-blue-bg px-[25px] pb-[20px] pt-[75px]">
       <div className="h-full bg-custom-yellow w-full border-2 border-red-custom shadow-default pb-[15px] flex flex-col justify-between items-center gap-[10px]">
         <span className="w-[95%] mt-2 text-[16px] leading-[110%] text-red-custom text-center">
-          Поздравляем
+          Поздравляем,
           <p>ты вырастил свой первый пион на Flowwow!</p>
         </span>
 
@@ -44,11 +35,7 @@ const Result = () => {
           <span className="text-[16px] leading-[110%] text-red-custom text-center">
             Друг и владелец пиона
           </span>
-          <img
-            src={resultText[selectedSeedId].img}
-            alt="Пион"
-            className="border-2 border-red-custom w-[95%]"
-          />
+          <img src={resultText[selectedSeedId].img} alt="Пион" className=" w-[95%]" />
 
           <span className="mb-3 text-[16px] leading-[110%] text-red-custom text-center">
             {resultText[selectedSeedId].name}
@@ -56,17 +43,26 @@ const Result = () => {
         </div>
 
         <div className="mx-[10px] flex gap-[5px] justify-end first-letter:h-[20%] w-[95%] min-h-[60px]">
-          <Button type={'nav'} onClick={handleClick}>
-            {'Забрать призы!'}
-          </Button>
+          <Button type={'nav'}>{'Забрать призы!'}</Button>
           <div className="flex gap-[5px] min-w-[125px]">
-            <Button type={'nav'} onClick={handleClick}>
-              <img src={vk} alt="Вконтакте" className=" w-[70%]" />
+            <Button type={'nav'}>
+              <a
+                href={`https://vk.com/share.php?url=${baseUrl}share/${
+                  selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
+                }.html`}>
+                <img src={vk} alt="Вконтакте" className=" w-[70%]" />
+              </a>
             </Button>
-            <Button type={'nav'} onClick={handleClick}>
-              <img src={tg} alt="Телеграмм" className=" w-[70%]" />
+            <Button type={'nav'}>
+              <a
+                href={`https://telegram.me/share/url?url=${baseUrl}share/${
+                  selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
+                }.html`}>
+                <img src={tg} alt="Телеграмм" className=" w-[70%]" />
+              </a>
             </Button>
           </div>
+          W
         </div>
       </div>
     </div>

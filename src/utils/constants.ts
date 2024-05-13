@@ -1,0 +1,1 @@
+export const baseUrl = 'https://flower-pink-five.vercel.app/'

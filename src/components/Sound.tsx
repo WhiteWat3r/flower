@@ -5,18 +5,18 @@ import defaultMusic from '../assets/music/floating-cat-michael-grubb-main-versio
 
 export const Sound = () => {
   const isSoundOn = useAppSelector((store) => store.main.isSoundOn);
-
+  const isBackgorindMusicPaused = useAppSelector((store) => store.main.isBackgroundMusicPaused);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     if (audioRef.current) {
-      if (!isSoundOn) {
+      if (!isSoundOn || isBackgorindMusicPaused) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
       }
     }
-  }, [defaultMusic, isSoundOn]);
+  }, [defaultMusic, isSoundOn, isBackgorindMusicPaused]);
 
   return (
     <>

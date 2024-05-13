@@ -7,12 +7,14 @@ import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import Input from '../ui/Input';
 
 import reactionImg from '../assets/images/reaction.png';
-import { setIsFirstClick, setIsSoundOn } from '../store/mainSlice';
+import { setBackgorindMusicPaused, setIsFirstClick, setIsSoundOn } from '../store/mainSlice';
 import { useDoTaskMutation, useGetTasksQuery, useSetFlowerNameMutation } from '../api/mainApi';
 import { ITask } from '../types/task';
+import raveMusic from '../assets/music/rave.mp3';
+import { useSound } from '../hooks/useSound';
 
 const reactions = [
-  ['— Потрясающе! Теперь есть куда пускать корни', '', '— Ура! Теперь у меня тоже есть имя'],
+  ['— Потрясающе! Теперь есть куда пускать корни', '— Расцветаю от такой заботы', '— Ура! Теперь у меня тоже есть имя'],
   ['— Спасибо, было душновато', '— Во-о-от теперь заживем!', '— Хм, неожиданно. Красивый жест!'],
   [
     '— Спасибо а то неохота листья морозить',
@@ -25,6 +27,8 @@ const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => 
   // console.log('animations', animations);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const [playRaveMusic] = useSound(raveMusic);
 
   const isFirstClick = useAppSelector((store) => store.main.isFirstClick);
   const currentDay = useAppSelector((store) => store.main.flower?.day_number);
@@ -56,14 +60,14 @@ const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => 
   };
 
   const handleSaveFlowerName = () => {
-    setFlowerNameMutation(flowerName);
+    setFlowerNameMutation({flower_name: flowerName});
     setChangeName(false);
     doTask({ task_name: 'give_the_flower_a_name' });
     setReaction(reactions[currentDay - 1][2]);
     othersTasksCompleted(2) === 2 &&
       setTimeout(() => {
         handleEndingDay();
-      }, 9000);
+      }, 3000);
   };
 
   const othersTasksCompleted = useMemo(
@@ -88,26 +92,34 @@ const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => 
 
     setTimeout(() => {
       resetAnimation();
-    }, 6000);
+    }, 5000);
 
     if (taskName === 'give_the_flower_a_name') {
       setChangeName(!isChangeName);
     } else {
+      if (taskName === 'dance_a_rave') {
+        dispatch(setBackgorindMusicPaused(true));
+        playRaveMusic();
+        setTimeout(() => {
+          dispatch(setBackgorindMusicPaused(false));
+        }, 5000);
+      }
+
       doTask({ task_name: taskName });
       setButtonsDisabled(true);
       setTimeout(() => {
         setReaction(reactions[currentDay - 1][taskNumber]);
         setButtonsDisabled(false);
-      }, 6000);
+      }, 5000);
 
       setTimeout(() => {
         setReaction('');
-      }, 9000);
+      }, 8000);
 
       othersTasksCompleted(taskNumber) === 2 &&
         setTimeout(() => {
           handleEndingDay();
-        }, 12000);
+        }, 8000);
     }
   };
 
@@ -125,7 +137,7 @@ const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => 
         {reaction && (
           <span
             className={`absolute ${
-              currentDay == 1 ? 'bottom-[50%]' : 'bottom-[60%]'
+              currentDay == 1 ? 'bottom-[50%]' : currentDay == 2 ? 'bottom-[60%]' : 'bottom-[70%]'
             }  left-[20%] z-10 border-2 border-custom-blue p-[10px] w-[220px] bg-custom-white shadow-default text-red-custom`}>
             {reaction}
             <img
