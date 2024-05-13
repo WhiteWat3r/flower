@@ -22,6 +22,7 @@ interface IGameState {
   isBackgroundMusicPaused: boolean;
   isSoundOn: boolean;
   isFirstClick: boolean;
+  onBoardingStep: number;
 }
 
 const mainState: IGameState = {
@@ -47,6 +48,7 @@ const mainState: IGameState = {
   isSoundOn: false,
   isFirstClick: true,
   isBackgroundMusicPaused: false,
+  onBoardingStep: 0,
 };
 
 export const mainSlice = createSlice({
@@ -79,7 +81,17 @@ export const mainSlice = createSlice({
     setIsFirstClick: (state, action) => {
       state.isFirstClick = action.payload;
     },
+    onBoardingStep: (state, action) => {
+      state.onBoardingStep = action.payload;
+    },
   },
 });
 
-export const { setIsSoundOn, setProfile, setIsFirstClick, setFlower, setBackgorindMusicPaused} = mainSlice.actions;
+export const {
+  setIsSoundOn,
+  setProfile,
+  setIsFirstClick,
+  setFlower,
+  setBackgorindMusicPaused,
+  onBoardingStep,
+} = mainSlice.actions;

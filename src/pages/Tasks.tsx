@@ -12,14 +12,18 @@ import { useDoTaskMutation, useGetTasksQuery, useSetFlowerNameMutation } from '.
 import { ITask } from '../types/task';
 import raveMusic from '../assets/music/rave.mp3';
 import { useSound } from '../hooks/useSound';
-
+// http://localhost:5173/?user_id=1212432354767909096644543566
 const reactions = [
-  ['— Потрясающе! Теперь есть куда пускать корни', '— Расцветаю от такой заботы', '— Ура! Теперь у меня тоже есть имя'],
-  ['— Спасибо, было душновато', '— Во-о-от теперь заживем!', '— Хм, неожиданно. Красивый жест!'],
   [
-    '— Спасибо а то неохота листья морозить',
-    '— Кайф. Обожаю воду!',
-    '— Немного странно, но мне нравится!',
+    '— Потрясающе! Теперь\u00A0есть\u00A0куда пускать корни',
+    '— Расцветаю от\u00A0такой\u00A0заботы',
+    '— Ура! Теперь\u00A0у\u00A0меня тоже\u00A0есть\u00A0имя',
+  ],
+  ['— Спасибо, было\u00A0душновато', '— Во-о-от, теперь\u00A0заживем!', '— Хм,\u00A0неожиданно. Красивый жест!'],
+  [
+    '— Спасибо, а\u00A0то\u00A0неохота листья морозить',
+    '— Кайф. Обожаю\u00A0воду!',
+    '— Немного\u00A0странно, но\u00A0мне\u00A0нравится!',
   ],
 ]; //по дням
 
@@ -60,7 +64,7 @@ const Tasks = ({ animations, loaded }: { animations: any; loaded: boolean }) => 
   };
 
   const handleSaveFlowerName = () => {
-    setFlowerNameMutation({flower_name: flowerName});
+    setFlowerNameMutation({ flower_name: flowerName });
     setChangeName(false);
     doTask({ task_name: 'give_the_flower_a_name' });
     setReaction(reactions[currentDay - 1][2]);

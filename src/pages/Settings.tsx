@@ -32,7 +32,7 @@ const Settings = () => {
             </Button>
           </li>
           <li className="h-full">
-            <Button type={'gameAction'} onClick={toggleSound}>
+            <Button type={'gameAction'} onClick={toggleSound} isSoundButton>
               {isSoundOn ? '> Звук: выключить' : '> Звук: включить'}
             </Button>
           </li>

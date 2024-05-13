@@ -34,10 +34,10 @@ const Result = () => {
           <span className="text-[16px] leading-[110%] text-red-custom text-center">
             Друг и владелец пиона
           </span>
-          <img src={resultText[selectedSeedId].img} alt="Пион" className=" w-[95%]" />
+          <img src={resultText[selectedSeedId]?.img} alt="Пион" className="border-red-custom border-2 w-[95%] object-scale-[140%]" />
 
           <span className="mb-3 text-[16px] leading-[110%] text-red-custom text-center">
-            {resultText[selectedSeedId].name}
+            {resultText[selectedSeedId]?.name}
           </span>
         </div>
 
@@ -48,20 +48,19 @@ const Result = () => {
               <a
                 href={`https://vk.com/share.php?url=${baseUrl}share/${
                   selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
-                }.html`}>
-                <img src={vk} alt="Вконтакте" className=" w-[70%]" />
+                }.html`} className='w-full flex justify-center'>
+                <img src={vk} alt="Вконтакте" className="w-[70%]" />
               </a>
             </Button>
             <Button type={'nav'}>
               <a
                 href={`https://telegram.me/share/url?url=${baseUrl}share/${
                   selectedSeedId === 0 ? 'yellow' : selectedSeedId === 1 ? 'white' : 'red'
-                }.html`}>
-                <img src={tg} alt="Телеграмм" className=" w-[70%]" />
+                }.html`} className='w-full flex justify-center'>
+                <img src={tg} alt="Телеграмм" className="w-[70%]" />
               </a>
             </Button>
           </div>
-          W
         </div>
       </div>
     </div>
